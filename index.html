@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-11-06 17:11:41 / Modified: 18:35:37" itemprop="dateCreated datePublished" datetime="2020-11-06T17:11:41+08:00">2020-11-06</time>
+              <time title="Created: 2020-11-06 17:11:41 / Modified: 19:32:13" itemprop="dateCreated datePublished" datetime="2020-11-06T17:11:41+08:00">2020-11-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -288,7 +288,9 @@ Figure 5. Framework of the model
 <p>In the case of Figure 5, (“New”, “York”), (“New”, “City”) and (“De”, “Blasio”) are tagged as 1 in the EH-to-ET sequence, which means “New York”, “New York City”, and “De Blasio” are three entities. For relation “mayor”, (“New”, “De”) is tagged as 1 in the SH-to-OH sequence, which means the mayor of the subject starting with “New” is the object starting with “De”. (“City”, “Blasio”) is tagged as 1 in the ST-to-OT sequence, which means that the subject and object are the entities ending with “City” and “Blasio”, respectively. Based on the information represented by these three sequences, a triplet can be decoded: (“New York City”, mayor, “De Blasio”).</p>
 <p>The same logic goes for other relations, but note that the tag 2 has an opposite meaning to the tag 1, which represents a reversal link between tokens. For example, (“York”, “Blasio”) is tagged as 2 in the ST-to-OT sequence of relation “born in”, which means “York” and “Blasio” are respectively the tail of a paired object and subject. Associated with the other two sequences, the decoded triplet should be (“De Blasio”, born in, “New York”).</p>
 <h1 id="experimental-results">Experimental results</h1>
+<center>
 <img src="https://user-images.githubusercontent.com/7437595/95207797-d6273e00-081a-11eb-8d6d-f00b3e20bef7.png">
+</center>
 <center>
 Main results
 </center>
