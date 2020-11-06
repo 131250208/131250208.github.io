@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://131250208.github.io/2020/10/06/TPlinker/">
+    <link itemprop="mainEntityOfPage" href="https://131250208.github.io/2020/11/06/TPlinker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/06/TPlinker/" class="post-title-link" itemprop="url">TPLinker: Single-stage Joint Extraction of Entities and Relations Through Token Pair Linking</a>
+            <a href="/2020/11/06/TPlinker/" class="post-title-link" itemprop="url">TPLinker: Single-stage Joint Extraction of Entities and Relations Through Token Pair Linking</a>
         </h2>
 
         <div class="post-meta">
@@ -183,16 +183,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-10-06 14:03:55" itemprop="dateCreated datePublished" datetime="2020-10-06T14:03:55+08:00">2020-10-06</time>
+              <time title="Created: 2020-11-06 17:11:41 / Modified: 18:30:52" itemprop="dateCreated datePublished" datetime="2020-11-06T17:11:41+08:00">2020-11-06</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-14 21:06:01" itemprop="dateModified" datetime="2020-10-14T21:06:01+08:00">2020-10-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -204,6 +198,14 @@
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/NLP/Information-Extraction/" itemprop="url" rel="index"><span itemprop="name">Information Extraction</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/Information-Extraction/Relation-Extraction/" itemprop="url" rel="index"><span itemprop="name">Relation Extraction</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/Information-Extraction/Relation-Extraction/Joint-Extraction/" itemprop="url" rel="index"><span itemprop="name">Joint Extraction</span></a>
                 </span>
             </span>
 
@@ -218,8 +220,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>（The article is on the way, now please see the paper instead.）<br>background</p>
-<h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/17iFHB2rp2-3MtRlXrIFH38APKk3SPtyv/view">TPLinker</a></p>
+          <h1 id="summary">Summary</h1>
+<p>We proposed a joint extraction model that can handle overlapping and nested problems. It is a single-stage model without any gap between training and inference, which means it is immune to exposure bias.</p>
+<h1 id="background">Background</h1>
+<p>Relation extraction is a technique to extract entities and relations from unstructured texts. It plays an essential role in many natrual language understanding tasks, such as text understanding, question answering (QA), and information retrieval (IR). In short, it is a typical task to extract knowledge of relations in the form of (subject, predicate, object).</p>
+<p>For example: <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&#x27;text&#x27;</span>: <span class="string">&#x27;Gone with the Wind is a novel by American writer Margaret Mitchell&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;relation_list&#x27;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;subject&#x27;</span>: <span class="string">&#x27;Gone with the Wind&#x27;</span>, </span><br><span class="line">            <span class="string">&#x27;object&#x27;</span>: <span class="string">&#x27;Margaret Mitchell&#x27;</span>, </span><br><span class="line">            <span class="string">&#x27;predicate&#x27;</span>: <span class="string">&#x27;author&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Early works address this task in a pipelined manner. They first identify all candidate entities and then classify the relations between each two entities. These methods ignore the interaction between named entity recognition and relation classification and suffer from error propagation.</p>
+<p>In order to utilize the information between two tasks, researchers proposed many models to extract entities and relations jointly. Joint learning helped improve the performance, while some early joint models, like NovelTagging, can not handle relation overlapping problems (see the table below). When entities occur in multiple relations, naive sequence labeling can not work well and usually miss some relations.</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 35%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th>Text</th>
+<th style="text-align: left;">Triplets</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Single Entity Overlapping</td>
+<td>Two of them, Jeff Francoeur and Brian McCann, are from <strong>Atlanta</strong>.</td>
+<td style="text-align: left;">(Jeff Francoeur, live in, <strong>Atlanta</strong>)(Brian McCann, live in, <strong>Atlanta</strong>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Entity Pair Overlapping</td>
+<td><strong>Sacramento</strong> is the capital city of the U.S. state of <strong>California</strong>.</td>
+<td style="text-align: left;">(<strong>California</strong>, contains, <strong>Sacramento</strong>)(<strong>California</strong>, capital, <strong>Sacramento</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p>Some models have been proposed to tackle these problems，such as <a target="_blank" rel="noopener" href="https://www.aclweb.org/anthology/P18-1047" title="Extracting relational facts by an end-to-end neural model with copy mechanism">CopyRE</a>, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.10438" title="CopyMTL: Copy Mechanism for Joint Extraction of Entities and Relations with Multi-Task Learning">CopyMTL</a>, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.03227" title="A novel cascade binary tagging framework for relational triple extraction">CasRel（HBT）</a>, but they have the problem of exposure bias. They use ground truth as input to guide the median training process but in inference stage they use predicted results instead, leading to a gap between training and inference.</p>
+For the decoder-based method (Figure 1), at training time, the ground truth tokens are used as context while at inference the entire sequence is generated by the resulting model on its own, and hence the previous tokens generated by the model are fed as context. As a result, the predicted tokens at training and inference are drawn from different distributions, namely, from the data distribution as opposed to the model distribution. <img src="https://user-images.githubusercontent.com/7437595/98356045-f6d2f580-205d-11eb-85d5-1383e32eeb05.png" width="75%" height="75%">
+<center>
+Figure 1. Decoder-based Model
+</center>
+Similarly, the decomposition-based method (Figure 2) uses the gold subject entity as speciﬁc input to guide the model extract object entities and relations during the training process while at inference the input head-entity is given by a trained model. <img src="https://user-images.githubusercontent.com/7437595/98356047-f8042280-205d-11eb-9ee4-5217c292f6a1.png" width="75%" height="75%">
+<center>
+Figure 2. Decomposition-based Model
+</center>
+<p>These models can jointly extract entities and relations by a single model, while in a way they regressed to pipelined methods since they do decoding by multiple interdependent steps. And this is the essense of why they have the exposure bias problem.</p>
+<p>The rest sections will introduce a model that can wipe out exposure bias and guarantee the consistency of training and inference.</p>
+<h1 id="the-tagging-schema">The tagging schema</h1>
+<img src="https://user-images.githubusercontent.com/7437595/98343858-6a203b80-204d-11eb-9890-c1da7590b84f.png" width="65%" height="65%">
+<center>
+Figure 3. Matrix tagging schema
+</center>
+<p>In a matrix, we tag the link between each two tokens in a sentence. The purple tag refers to that the two correspond-ding positions are the start and end token of an entity. The red tag means that two positions are the start tokens of paired subject and object entities. The blue tag means two positions are respectively the end tokens of paired subject and obj-ect entities.</p>
+<img src="https://user-images.githubusercontent.com/7437595/98343864-6b516880-204d-11eb-8bc9-cfa08b7f42a4.png" width="65%" height="65%">
+<center>
+Figure 4. Handshaking tagging schema
+</center>
+<p>Because the entity tail is impossible to appear before the head, to save resources, we map relation tags (red and blue) in the lower triangular region to the upper one and drop the whole lower region.</p>
+<h1 id="model">Model</h1>
+<img src="https://user-images.githubusercontent.com/7437595/97800160-0d4c0c00-1c6e-11eb-960a-0574a6e1f6e9.png">
+<center>
+Figure 5. Framework of the model
+</center>
+<h2 id="token-pair-representation">Token Pair Representation</h2>
+<p>Given a sentence, we first map each token into a low-dimensional contextual vector by a basic encoder. Then we generate a representation for the token pair by Equation 1: <span class="math display">\[h_{i,j} = tanh(W_h \cdot [h_i; h_j] + b_h), j \geq i \tag{1}\]</span></p>
+<h2 id="handshaking-tagger">Handshaking Tagger</h2>
+<p>Given a token pair representation by Equation 2, the link label of a token pair is predicted by Equation 3: <span class="math display">\[ P(y_{i,j}) = Softmax(W_o \cdot h_{i,j} + b_o) \tag{2}\]</span> <span class="math display">\[ link(w_i, w_j) = argmax_l P(y_{i,j} = l) \tag{3}\]</span></p>
+<h2 id="decoding">Decoding</h2>
+<p>In the case of Figure 5, (“New”, “York”), (“New”, “City”) and (“De”, “Blasio”) are tagged as 1 in the EH-to-ET sequence, which means “New York”, “New York City”, and “De Blasio” are three entities. For relation “mayor”, (“New”, “De”) is tagged as 1 in the SH-to-OH sequence, which means the mayor of the subject starting with “New” is the object starting with “De”. (“City”, “Blasio”) is tagged as 1 in the ST-to-OT sequence, which means that the subject and object are the entities ending with “City” and “Blasio”, respectively. Based on the information represented by these three sequences, a triplet can be decoded: (“New York City”, mayor, “De Blasio”).</p>
+<p>The same logic goes for other relations, but note that the tag 2 has an opposite meaning to the tag 1, which represents a reversal link between tokens. For example, (“York”, “Blasio”) is tagged as 2 in the ST-to-OT sequence of relation “born in”, which means “York” and “Blasio” are respectively the tail of a paired object and subject. Associated with the other two sequences, the decoded triplet should be (“De Blasio”, born in, “New York”).</p>
+<h1 id="experimental-results">Experimental results</h1>
+<img src="https://user-images.githubusercontent.com/7437595/95207797-d6273e00-081a-11eb-8d6d-f00b3e20bef7.png">
+<center>
+Main results
+</center>
+<img src="https://user-images.githubusercontent.com/7437595/95207811-d9bac500-081a-11eb-87b4-2d917cdc6e21.png">
+<center>
+Results on different subsets of the test data
+</center>
+<h1 id="future-work">Future work</h1>
+<p>Some points to further improve the performance： 1. We use concatenated vectors to represent the relation between two tokens, which may not be the a good way to approach the best performance. 2. We use the same representation to classify entities and relations. This may lead to interference between two tasks instead of mutually improvement. Two recent works demonstrated that using different representation might achieve a better performance: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.12812" title="A Frustratingly Easy Approach for Joint Entity and Relation Extraction">A Frustratingly Easy Approach</a>, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.03851," title="Two are Better than One: Joint Entity and Relation Extraction with Table-Sequence Encoders">Two are Better than One</a> 3. The model extend the original sequence from O(N) to O(N^2), which adds the cost significantly and make it an expensive task to deal with long sequences.</p>
+<h1 id="more-info">More Info</h1>
+<p>If you want to know more details of this work, please see our <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2010.13415" title="TPLinker: Single-stage Joint Extraction of Entities and Relations Through Token Pair Linking">paper</a> or <a target="_blank" rel="noopener" href="http://github.com/131250208/TPlinker-joint-extraction" title="TPlinker-joint-extraction">source code</a>. Please do not hesitate to <a href="mailto://wangyucheng@iie.ac.cn">email me</a> or open an issue if you have any questions about the code and the paper.</p>
 
       
     </div>
@@ -308,13 +388,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -402,6 +482,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
