@@ -332,6 +332,81 @@ Results on different subsets of the test data
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://131250208.github.io/2020/11/18/pos_dependencies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yucheng Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/18/pos_dependencies/" class="post-title-link" itemprop="url">POS and dependencies</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-18 10:54:30 / Modified: 10:57:20" itemprop="dateCreated datePublished" datetime="2020-11-18T10:54:30+08:00">2020-11-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="词性句法分析依存关系的符号解释">词性、句法分析、依存关系的符号解释</h1>
+<h2 id="词性解释">词性解释</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">CC: conjunction, coordinatin 表示连词 </span><br><span class="line">CD: numeral, cardinal 表示基数词 </span><br><span class="line">DT: determiner 表示限定词 </span><br><span class="line">EX: existential there 存在句 </span><br><span class="line">FW: foreign word 外来词 </span><br><span class="line">IN: preposition or conjunction, subordinating 介词或从属连词 </span><br><span class="line">JJ: adjective or numeral, ordinal 形容词或序数词 </span><br><span class="line">JJR: adjective, comparative 形容词比较级 </span><br><span class="line">JJS: adjective, superlative 形容词最高级 </span><br><span class="line">LS: list item marker 列表标识 </span><br><span class="line">MD: modal auxiliary 情态助动词 </span><br><span class="line">NN: noun, common, singular or mass </span><br><span class="line">NNS: noun, common, plural </span><br><span class="line">NNP: noun, proper, singular </span><br><span class="line">NNPS: noun, proper, plural </span><br><span class="line">PDT: pre-determiner 前位限定词 </span><br><span class="line">POS: genitive marker 所有格标记 </span><br><span class="line">PRP: pronoun, personal 人称代词 </span><br><span class="line">PRP:pronoun,possessive所有格代词RB:adverb副词RBR:adverb,comparative副词比较级RBS:adverb,superlative副词最高级RP:particle小品词SYM:symbol符号TO:”to”asprepositionorinfinitivemarker作为介词或不定式标记UH:interjection插入语VB:verb,baseformVBD:verb,pasttenseVBG:verb,presentparticipleorgerundVBN:verb,pastparticipleVBP:verb,presenttense,not3rdpersonsingularVBZ:verb,presenttense,3rdpersonsingularWDT:WH−determinerWH限定词WP:WH−pronounWH代词WP: WH-pronoun, possessive WH所有格代词 </span><br><span class="line">WRB:Wh-adverb WH副词</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://samurais.github.io/development/2017/04/28/chinese-pos-tagging/">中文词性标注标准：ICTPOS3.0词性标记集</a></p>
+<h2 id="句法分析句法树">句法分析（句法树）</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">ROOT：要处理文本的语句 </span><br><span class="line">IP：简单从句 </span><br><span class="line">NP：名词短语 </span><br><span class="line">VP：动词短语 </span><br><span class="line">PU：断句符，通常是句号、问号、感叹号等标点符号 </span><br><span class="line">LCP：方位词短语 </span><br><span class="line">PP：介词短语 </span><br><span class="line">CP：由‘的’构成的表示修饰性关系的短语 </span><br><span class="line">DNP：由‘的’构成的表示所属关系的短语 </span><br><span class="line">ADVP：副词短语 </span><br><span class="line">ADJP：形容词短语 </span><br><span class="line">DP：限定词短语 </span><br><span class="line">QP：量词短语 </span><br><span class="line">NN：常用名词 </span><br><span class="line">NR：固有名词：表示仅适用于该项事物的名词，含地名，人名，国名，书名，团体名称以及一事件的名称等。 </span><br><span class="line">NT：时间名词 </span><br><span class="line">PN：代词 </span><br><span class="line">VV：动词 </span><br><span class="line">VC：是 </span><br><span class="line">CC：表示连词 </span><br><span class="line">VE：有 </span><br><span class="line">VA：表语形容词 </span><br><span class="line">AS：内容标记（如：了） </span><br><span class="line">VRD：动补复合词 </span><br><span class="line">CD: 表示基数词 </span><br><span class="line">DT: determiner 表示限定词 </span><br><span class="line">EX: existential there 存在句 </span><br><span class="line">FW: foreign word 外来词 </span><br><span class="line">IN: preposition or conjunction, subordinating 介词或从属连词 </span><br><span class="line">JJ: adjective or numeral, ordinal 形容词或序数词 </span><br><span class="line">JJR: adjective, comparative 形容词比较级 </span><br><span class="line">JJS: adjective, superlative 形容词最高级 </span><br><span class="line">LS: list item marker 列表标识 </span><br><span class="line">MD: modal auxiliary 情态助动词 </span><br><span class="line">PDT: pre-determiner 前位限定词 </span><br><span class="line">POS: genitive marker 所有格标记 </span><br><span class="line">PRP: pronoun, personal 人称代词 </span><br><span class="line">RB: adverb 副词 </span><br><span class="line">RBR: adverb, comparative 副词比较级 </span><br><span class="line">RBS: adverb, superlative 副词最高级 </span><br><span class="line">RP: particle 小品词 </span><br><span class="line">SYM: symbol 符号 </span><br><span class="line">TO:”to” as preposition or infinitive marker 作为介词或不定式标记 </span><br><span class="line">WDT: WH-determiner WH限定词 </span><br><span class="line">WP: WH-pronoun WH代词 </span><br><span class="line">WP$: WH-pronoun, possessive WH所有格代词 </span><br><span class="line">WRB:Wh-adverb WH副词</span><br></pre></td></tr></table></figure>
+<h2 id="关系表示">关系表示</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">abbrev: abbreviation modifier，缩写 </span><br><span class="line">acomp: adjectival complement，形容词的补充； </span><br><span class="line">advcl : adverbial clause modifier，状语从句修饰词 </span><br><span class="line">advmod: adverbial modifier状语 </span><br><span class="line">agent: agent，代理，一般有by的时候会出现这个 </span><br><span class="line">amod: adjectival modifier形容词 </span><br><span class="line">appos: appositional modifier,同位词 </span><br><span class="line">attr: attributive，属性 </span><br><span class="line">aux: auxiliary，非主要动词和助词，如BE,HAVE SHOULD&#x2F;COULD等到 </span><br><span class="line">auxpass: passive auxiliary 被动词 </span><br><span class="line">cc: coordination，并列关系，一般取第一个词 </span><br><span class="line">ccomp: clausal complement从句补充 </span><br><span class="line">complm: complementizer，引导从句的词好重聚中的主要动词 </span><br><span class="line">conj : conjunct，连接两个并列的词。 </span><br><span class="line">cop: copula。系动词（如be,seem,appear等），（命题主词与谓词间的）连系 </span><br><span class="line">csubj : clausal subject，从主关系 </span><br><span class="line">csubjpass: clausal passive subject 主从被动关系 </span><br><span class="line">dep: dependent依赖关系 </span><br><span class="line">det: determiner决定词，如冠词等 </span><br><span class="line">dobj : direct object直接宾语 </span><br><span class="line">expl: expletive，主要是抓取there </span><br><span class="line">infmod: infinitival modifier，动词不定式 </span><br><span class="line">iobj : indirect object，非直接宾语，也就是所以的间接宾语； </span><br><span class="line">mark: marker，主要出现在有“that” or “whether”“because”, “when”, </span><br><span class="line">mwe: multi-word expression，多个词的表示 </span><br><span class="line">neg: negation modifier否定词 </span><br><span class="line">nn: noun compound modifier名词组合形式 </span><br><span class="line">npadvmod: noun phrase as adverbial modifier名词作状语 </span><br><span class="line">nsubj : nominal subject，名词主语 </span><br><span class="line">nsubjpass: passive nominal subject，被动的名词主语 </span><br><span class="line">num: numeric modifier，数值修饰 </span><br><span class="line">number: element of compound number，组合数字 </span><br><span class="line">parataxis: parataxis: parataxis，并列关系 </span><br><span class="line">partmod: participial modifier动词形式的修饰 </span><br><span class="line">pcomp: prepositional complement，介词补充 </span><br><span class="line">pobj : object of a preposition，介词的宾语 </span><br><span class="line">poss: possession modifier，所有形式，所有格，所属 </span><br><span class="line">possessive: possessive modifier，这个表示所有者和那个’S的关系 </span><br><span class="line">preconj : preconjunct，常常是出现在 “either”, “both”, “neither”的情况下 </span><br><span class="line">predet: predeterminer，前缀决定，常常是表示所有 </span><br><span class="line">prep: prepositional modifier </span><br><span class="line">prepc: prepositional clausal modifier </span><br><span class="line">prt: phrasal verb particle，动词短语 </span><br><span class="line">punct: punctuation，这个很少见，但是保留下来了，结果当中不会出现这个 </span><br><span class="line">purpcl : purpose clause modifier，目的从句 </span><br><span class="line">quantmod: quantifier phrase modifier，数量短语 </span><br><span class="line">rcmod: relative clause modifier相关关系 </span><br><span class="line">ref : referent，指示物，指代 </span><br><span class="line">rel : relative </span><br><span class="line">root: root，最重要的词，从它开始，根节点 </span><br><span class="line">tmod: temporal modifier </span><br><span class="line">xcomp: open clausal complement </span><br><span class="line">xsubj : controlling subject 掌控者</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://131250208.github.io/2020/11/16/pip_available/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -485,7 +560,7 @@ Results on different subsets of the test data
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -498,7 +573,7 @@ Results on different subsets of the test data
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
